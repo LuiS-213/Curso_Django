@@ -1,0 +1,21 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+
+    <!-- samacuco!!! -->
+    <!-- <form action="{% url 'comments:add' %}" method="post">
+        {% csrf_token %}
+        <textarea required name="text"></textarea>
+        <button type="submit">Send</button>
+    </form> -->
+  
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit">Send</button>
+    </form>
+{% endblock content %}

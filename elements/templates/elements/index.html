@@ -1,0 +1,63 @@
+
+
+
+{% extends "base.html" %}
+
+
+
+{% block head %}
+
+    <title>Elmement List</title>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+    <div class="container">
+
+        <a href="{% url 'elements:add' %}" class="add-link">Add Element</a>
+
+        {% for e in elements %}
+
+            <div class="comment-card">
+
+                <p>{{ e.id }} - {{ e.title }} - {{ e.category.title }}</p>
+
+                <p class="date">{{ e.created }}</p>
+
+                <div class="comment-actions">
+
+                    <a href="{% url 'elements:update' e.id %}" class="btn btn-edit">Edit</a>
+
+                    <form action="{% url 'elements:delete' e.id %}" method="post">
+
+                        {% csrf_token %}
+
+                        <button type="submit" class="btn btn-delete">Delete</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+        <!-- Paginación -->
+    {% include 'partials/pagination.html' with page_obj=elements %}
+
+    </div>
+
+{% endblock %}
+ la comparación:
+</p>
+<pre><code class="language-plaintext">if (person.getName().toLowerCase().contains(filterPattern))
+</code></pre>
+<p>
+    En nuestro caso nos interesa que NO sea sensible a mayúsculas/minúsculas y que contenga (<code>contains</code>) la palabra o sección clave y de esta forma tener un filtro bastante flexible, pero puedes expresarlo como desees.
+</p>
+<p>
+    <a target="_blank" rel="noopener noreferrer" href="https://github.com/libredesarrollo/android-studio/tree/master/RecyclerViewFilter">Descargar</a>
+</p>

@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+
+
+{% block head %}
+
+<title>Comments List</title>
+
+{% endblock %}
+
+
+
+{% block content %}
+
+{% load custom_tags %}
+
+<div class="container">
+    
+    {% if messages %}
+
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">
+        {{ message }}
+        </div>
+    {% endfor %}
+
+    {% endif %}
+
+    {% my_connection "table" "C1" %}
+    {% comment %} {{ "Andres"|my_complete_info:"CRUZ":"80"}} {% endcomment %}
+    {{ "Andres"|my_complete_name:"CRUZ"|lower }}
+    {{ "Andres CRUZ"|my_name }}
+    {{ ""|my_name }}
+
+    <a href="{% url 'comments:add' %}" class="add-link">Add Comment</a>
+
+    {% for c in comments %}
+
+    <div class="comment-card">
+        
+        <p>{{ c.id }}/{{ c.text }}</p>
+
+        <p class="date">{{ c.date_posted }}</p>
+
+        <div class="comment-actions">
+
+            {% if request.user.id %}
+
+            <a href="{% url 'comments:update' c.id %}" class="btn btn-edit">Edit</a>
+
+            <form action="{% url 'comments:delete' c.id %}" method="post">
+
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-delete">Delete</button>
+
+            </form>
+            {% else %}
+                <p>No estas auth! fuera!</p>
+            {% endif %}
+        </div>
+
+    </div>
+
+    {%  empty %}
+        <p>No comments available.</p>
+    {% endfor %}
+
+    <!-- Paginación -->
+    {% include 'partials/pagination.html' with page_obj=comments %}
+
+</div>
+
+{% endblock content %}
